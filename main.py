@@ -3,22 +3,42 @@ import mpmath as math
 
 library = {}
 
-
-def shape_drawing(shape, n):
+def diagram(shape, n):
   if shape == "polgon":
+    a = 400/n
+    turtle. begin_fill()
+    turtle.fillcolor("dark grey")
     for repeats in range(n): 
-      turtle.forward(100)
+      turtle.forward(a)
       turtle.left((360/n))
+    turtle.end_fill()
 
-    turtle.forward(50)
+    turtle.forward(a/2)
     turtle.write("   a")
     turtle.left(90)
+
     angle = ((((n-2)*180)/n)/2)*(math.pi/180)
-    r = (100/2)*(math.tan(angle))
+    r = (a/2)*(math.tan(angle))
+
     turtle.forward(r/2)
     turtle.write("  r") # draws diagram
     turtle.forward(r/2)
+
+  
+    turtle.pensize(2)
+    turtle.dot()
+    turtle.pensize(1)
+
+    turtle.pencolor("grey")
+    turtle.write("  A")
+    turtle.pencolor("black")
+  
+
+    int_angle = (180-((angle*(180/math.pi))*2))
+    turtle.right(int_angle)
+
     R = r*math.sec(math.pi/n)
+
     turtle.forward(R/2)
     turtle.write("  R")
     turtle.forward(R/2)
@@ -26,12 +46,12 @@ def shape_drawing(shape, n):
     turtle.circle(R)
     turtle.write("     C")
 
+    turtle.hideturtle()
 
 
 
 def polygon_maths(value, type,n):
   angle = ((((n-2)*180)/n)/2)*(math.pi/180)
-
 
   if type == "r":
     r = value
@@ -56,71 +76,44 @@ def polygon_maths(value, type,n):
 
 
   A = n*r*2*math.tan(math.pi/n)*10
-
   a = (r/(math.tan(angle)))*2
-
   P = a*n
-
   R = r*math.sec(math.pi/n)
-
   C = 2*math.pi*R
-    
-  print(R,P,a,C,A,r)
+
+  print("R:",R,"P:",P,"a:",a,"C:",C,"A:",A,"r:",r)
   
   
-
-
-
 
 def regular_polygons():
   while True:
     try:
-      n = int(input("how many as does your shape have?"))
+      n = int(input("how many sides does your shape have?"))
       if n < 3:
         int("a") # breaks code to except condition
-      shape_drawing("polgon",n)
+      diagram("polgon",n)
       
       break
 
     except:
       pass
-    
-  choice = input("write in given variables format: area:1, a:2")
-  data = choice.split(",")
-  for pair in data:
-    key = pair.split(":")[0]
-    value = pair.split(":")[1]
-    library[key] = value
 
-  if "r" in library:
-    r = int(library.get("r"))
-    polygon_maths(r,"r",n)
+  while True:
+    try:
 
-  if "a" in library:
-    a = int(library.get("a"))
-    polygon_maths(a,"a",n)
-
-  if "A" in library:
-    A = int(library.get("A"))
-    polygon_maths(A,"A",n)
-
-  if "R" in library:
-    R = int(library.get("R"))
-    polygon_maths(R,"R",n)
-  
-  if "C" in library:
-    C = int(library.get("C"))
-    polygon_maths(C,"C",n)
+      choice = input("write given variables in format: known:value \t")
+      key = choice.split(":")[0]
+      value = choice.split(":")[1]
+      library[key] = value
 
 
+      if key in library:
+        value = int(library.get(key))
+        polygon_maths(value,key,n)
+      break
+    except:
+      pass
 
 
 # start of code
-while True:
-    select = input("what would you like to calculate?: Regular polygon (1) Circles (2) Triangles (3)")
-    if select == "1":
-        regular_polygons()
-    if select == "2":
-        pass
-    if select == "3":
-        pass
+regular_polygons()
