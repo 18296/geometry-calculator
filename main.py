@@ -34,29 +34,38 @@ def polygon_maths(value, type,n):
 
 
   if type == "r":
-
     r = value
 
-    A = n*r*2*math.tan(math.pi/n)*10
-
-    
-    a = (value/(math.tan(angle)))*2
-    # a = (A/n)/10
-
-
-    P = a*n
-    
-
-    R = value*math.sec(math.pi/n)
-
-    C = 2*math.pi*R
-    
-    print(R,P,a,C,A)
-
-
-
   if type == "a":
-    print(value) # figure the math out later
+    a = value
+    r = (1/2)*a*math.cot(math.pi/n)
+
+  if type == "A":
+    A = value
+    a = (A/n)/10
+    r = (1/2)*a*math.cot(math.pi/n)
+
+  if type == "R":
+    R = value
+    r = R*math.cos(math.pi/n)
+  
+  if type == "C":
+    C = value
+    R = (C/(2*math.pi))
+    r = R*math.cos(math.pi/n)
+
+
+  A = n*r*2*math.tan(math.pi/n)*10
+
+  a = (r/(math.tan(angle)))*2
+
+  P = a*n
+
+  R = r*math.sec(math.pi/n)
+
+  C = 2*math.pi*R
+    
+  print(R,P,a,C,A,r)
   
   
 
@@ -94,6 +103,14 @@ def regular_polygons():
   if "A" in library:
     A = int(library.get("A"))
     polygon_maths(A,"A",n)
+
+  if "R" in library:
+    R = int(library.get("R"))
+    polygon_maths(R,"R",n)
+  
+  if "C" in library:
+    C = int(library.get("C"))
+    polygon_maths(C,"C",n)
 
 
 
