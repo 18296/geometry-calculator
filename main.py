@@ -8,7 +8,7 @@ library = {}
 
 def diagram(shape, n,values):
   turtle.clearscreen()
-  if shape == "polgon":
+  if shape == "polygon":
     a = 400/n
     turtle. begin_fill()
     turtle.fillcolor("dark grey")
@@ -25,7 +25,7 @@ def diagram(shape, n,values):
     r = (a/2)*(math.tan(angle))
 
     turtle.forward(r/2)
-    turtle.write(values[1]) # draws diagram
+    turtle.write(values[1])
     turtle.forward(r/2)
 
   
@@ -63,9 +63,9 @@ def polygon_maths(value, type,n):
     a = value
     r = (1/2)*a*math.cot(math.pi/n)
 
-  if type == "A":
-    A = value
-    a = (A/n)/10
+  if type == "P":
+    P = value
+    a = (P/n)
     r = (1/2)*a*math.cot(math.pi/n)
 
   if type == "R":
@@ -78,28 +78,29 @@ def polygon_maths(value, type,n):
     r = R*math.cos(math.pi/n)
 
 
-  A = n*r*2*math.tan(math.pi/n)*10
+  #A = n*r*2*math.tan(math.pi/n)*10
   a = (r/(math.tan(angle)))*2
+  A = (n*a*r)/2
   P = a*n
   R = r*math.sec(math.pi/n)
   C = 2*math.pi*R
 
-  a,r,A,R,C = (round(a,2)),(round(r,2)),(round(A,2)),(round(R,2)),(round(C,2))
+  a,r,A,R,C,P = (round(a,2)),(round(r,2)),(round(A,2)),(round(R,2)),(round(C,2)),(round(P,2))
   listB = [a,r,A,R,C]
-  diagram("polgon",n,listB)
+  diagram("polygon",n,listB)
   print("R:",R,"P:",P,"a:",a,"C:",C,"A:",A,"r:",r, "\n(rounded to 2 d.p.)")
   
   
 
-def regular_polygons():
+def inputs_checker():
   while True:
     try:
       n = int(input("how many sides does your shape have?\t"))
       if n < 3:
-        print("2 dimentional shapes must have >2 sides")
+        print("2 dimentional shapes must have >=3 sides")
         int("a") # breaks code to except condition
       listA = ["  a","   r","A","R","C"]
-      diagram("polgon",n,listA)
+      diagram("polygon",n,listA)
       break
 
     except:
@@ -108,15 +109,14 @@ def regular_polygons():
 
   while True:
     try:
-
+      print("accepted known inputs: a,r,A,R,C,P")
       choice = input("write given variables in format: known:value \t")
       key = choice.split(":")[0]
       value = choice.split(":")[1]
       library[key] = value
 
-
       if key in library:
-        value = int(library.get(key))
+        value = float(library.get(key))
         polygon_maths(value,key,n)
       break
     except:
@@ -124,5 +124,6 @@ def regular_polygons():
 
 
 # start of code
+print("Welcome to Polygon Calculator.")
 while True:
-  regular_polygons()
+  inputs_checker()
